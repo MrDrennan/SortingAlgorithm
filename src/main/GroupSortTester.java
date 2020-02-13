@@ -7,20 +7,36 @@ import java.util.Random;
 
 public class GroupSortTester {
     public static void main(String[] args) {
+        int arraySize = 15;
+        int randUpperBound = 30;
+        int groupQty = 5;
+
         Random rand = new Random();
 
-        int[] array = new int[15];
+        int[] array = new int[arraySize];
 
         for (int i = 0; i < array.length; i++) {
-            array[i] = rand.nextInt(30) + 1;
+            array[i] = rand.nextInt(randUpperBound) + 1;
         }
-        array = new int[] {25, 17, 17, 1, 3, 18, 8, 13, 10, 1, 26, 1, 12, 14, 9};
-        System.out.println(Arrays.toString(array));
+
+        System.out.println("Generated an array of size " + arraySize + " with a range of [1, " + randUpperBound + "]");
+        System.out.println("Original: " + Arrays.toString(array));
+        System.out.println();
+        System.out.println("Sorting with " + groupQty + " groups");
 
         GroupSort sorter = new GroupSort();
+        sorter.sort(array, groupQty);
 
-        sorter.sort(array, 5);
+        System.out.println("Sorted: " + Arrays.toString(array));
+        System.out.println("Detected inversions? " + hasInversions(array));
+    }
 
-        System.out.println(Arrays.toString(array));
+    public static boolean hasInversions(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i] > array[i + 1]) {
+                return true;
+            }
+        }
+        return false;
     }
 }
