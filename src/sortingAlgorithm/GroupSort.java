@@ -2,8 +2,12 @@ package sortingAlgorithm;
 
 public class GroupSort {
 
+    // To make upper bounds inclusive and counter rounding errors
+    public static final double THRESHOLD_ADJUSTMENT = .000001;
+
     public void sort(int[] sourceArray, int groupQty) {
-        // Preconditions
+
+        // Precondition
         if (sourceArray.length < 2) {
             return;
         }
@@ -24,25 +28,18 @@ public class GroupSort {
         System.out.println("Min/max: [" + min + ", " + max + "]");
 
         // Range of numbers divided by groupQty is group size
-        //int groupSize = (max - min + 1) / groupQty + 1;
-        double groupSize = (double)(max - min + 1) / groupQty;
-
-
-
-        //int groupsRemainder = (max - min + 1) % groupQty;
+        double groupSize = (double)(max - min) / groupQty;
 
         Node[] groups = new Node[groupQty];
 
         // Add items to groups while sorting
         for (int currInt : sourceArray) {
-            int groupIndex = (int)((currInt - min) / groupSize);
-            //int remainderAdjustment = groupsRemainder - (groupQty - 1 - groupIndex);
-
+            int groupIndex = (int)((currInt - min) / groupSize - THRESHOLD_ADJUSTMENT);
             addItemToGroup(currInt, groupIndex, groups);
         }
 
+        // Output group data
         System.out.println("Group size: " + groupSize);
-
         System.out.print("Group thresholds: [" + (min + (int)groupSize));
 
         for (int i = 2; i <= groupQty; i++) {
@@ -51,23 +48,31 @@ public class GroupSort {
         System.out.println("]\n");
 
         int srcIndex = 0;
+        int lowerBound = min;
 
         // Place items back into source array
-        //for (Node currGroup : groups) {
         for (int i = 0; i < groups.length; i++) {
-            System.out.print(i + "[" + (int)((i) * groupSize + min) + ", " + (int)((i + 1) * groupSize + min) + "]: ");
+            int upperBound = (int)((i + 1) * groupSize + min);
+            System.out.print(i + "[" + lowerBound + ", " + upperBound + "]: ");
+            lowerBound = upperBound + 1;
 
             Node currNode = groups[i];
 
+            // Fencepost
             if (currNode != null) {
                 System.out.print(currNode.data);
+
                 sourceArray[srcIndex] = currNode.data;
                 srcIndex++;
                 currNode = currNode.next;
             }
+            else {
+                System.out.print("null");
+            }
 
             while (currNode != null) {
                 System.out.print(" -> " + currNode.data);
+
                 sourceArray[srcIndex] = currNode.data;
                 srcIndex++;
                 currNode = currNode.next;
