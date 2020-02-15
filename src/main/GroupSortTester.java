@@ -18,13 +18,13 @@ import java.util.Scanner;
  * @author Chad Drennan
  * @version 1.0
  */
-public class GroupSortTester {
+class GroupSortTester {
 
     // Array size to create for testing
-    public static final int ARRAY_SIZE = 20;
+    private static final int ARRAY_SIZE = 20;
 
     // Inclusive upper boundary for random int range
-    public static final int RAND_UPPER_BOUND = 100;
+    private static final int RAND_UPPER_BOUND = 100;
 
 
     /**
@@ -87,7 +87,7 @@ public class GroupSortTester {
     }
 
 
-    // Determines if an array has atleast one inversion.
+    // Determines if an array has at least one inversion.
     private static boolean hasInversions(int[] array) {
         for (int i = 0; i < array.length - 1; i++) {
             if (array[i] > array[i + 1]) {

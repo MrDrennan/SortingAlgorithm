@@ -15,13 +15,13 @@ package sortingalgorithm;
 public class GroupSort {
 
     // To make upper bounds inclusive and counter rounding errors
-    public static final double THRESHOLD_ADJUSTMENT = .000001;
+    private static final double THRESHOLD_ADJUSTMENT = .000001;
 
     /**
      * Sorts an array of integers in ascending order using groups.
      * Must supply groupQty of 1 or greater
      * @param sourceArray the array to sort
-     * @param groupQty amaunt of groups to sort with
+     * @param groupQty amount of groups to sort with
      * @throws IllegalArgumentException if groupQty is less than 1
      */
     public void sort(int[] sourceArray, int groupQty) {
@@ -75,9 +75,9 @@ public class GroupSort {
 
 
     // Helper method to putSortedItemsIntoSourceArray method
-    private int displayGroupRange(int min, double groupSize, int lowerBound, int i) {
-        int upperBound = (int)((i + 1) * groupSize + min);
-        System.out.print(i + "[" + lowerBound + ", " + upperBound + "]: ");
+    private int displayGroupRange(int min, double groupSize, int lowerBound, int index) {
+        int upperBound = (int)((index + 1) * groupSize + min);
+        System.out.print(index + "[" + lowerBound + ", " + upperBound + "]: ");
         lowerBound = upperBound + 1;
         return lowerBound;
     }
@@ -161,31 +161,30 @@ public class GroupSort {
      * @author Chad Drennan
      * @version 1.0
      */
-    private class Node {
+    private static class Node {
         // Holds integer values
-        private int data;
+        private final int data;
 
         // The node this node links to
         private Node next;
 
 
         /**
-         * 1 arg constructor
-         * @param data the integer data this node contains
-         */
-        private Node(int data) {
-            this(data, null);
-        }
-
-
-        /**
-         * 2 arg constructor
+         * 2 args constructor
          * @param data integer data for this node
          * @param next node this node links to
          */
         private Node(int data, Node next) {
             this.data = data;
             this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "data=" + data +
+                    ", next=" + next +
+                    '}';
         }
     }
 }
